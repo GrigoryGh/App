@@ -126,8 +126,8 @@ class _LoginPageState extends State<LoginPage> {
   void _onLogin(context) {
     final regExp = RegExp(RegularExpressions.email);
 
-    // Navigator.of(context).pushReplacementNamed(AppRoutes.homepage);
-    // return;
+    Navigator.of(context).pushReplacementNamed(AppRoutes.homepage);
+    return;
     if (usernameCtrl.text.isNotEmpty && passwordCtrl.text.isNotEmpty) {
       if (regExp.hasMatch(usernameCtrl.text)) {
         Navigator.of(context).pushReplacementNamed(AppRoutes.homepage);
