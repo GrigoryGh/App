@@ -1,65 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:indigo/pages/homepage/home_page_provider.dart';
 import 'package:indigo/widgets/drawer.dart';
 import 'package:indigo/widgets/grid_builder.dart';
 import 'package:indigo/widgets/list_builder.dart';
+import 'package:provider/provider.dart';
 
 import '../../base/routes.dart';
 
-class HomePageWidget extends StatefulWidget {
+class HomePageWidget extends StatelessWidget {
   const HomePageWidget({Key? key}) : super(key: key);
 
   @override
-  State<HomePageWidget> createState() => _HomePageWidgetState();
-}
-
-class _HomePageWidgetState extends State<HomePageWidget> {
-  bool isGrid = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigatorDrawer(),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.settingpage);
+    return ChangeNotifierProvider<HomePageProvider>(
+      create: (context) => HomePageProvider(),
+      child: Scaffold(
+        drawer: const NavigatorDrawer(),
+        appBar: AppBar(
+          actions: [
+            Consumer<HomePageProvider>(
+              builder: (context, value, child) {
+                return IconButton(
+                    onPressed: () {
+                      value.onChange();
+                    },
+                    icon: value.isGrid
+                        ? const Icon(Icons.list)
+                        : const Icon(Icons.grid_view_outlined));
               },
-              icon: const Icon(Icons.settings)),
-          if (isGrid)
-            IconButton(
-              icon: const Icon(Icons.list),
-              onPressed: () {
-                setState(() {
-                  isGrid = false;
-                });
-              },
-            )
-          else
-            IconButton(
-              icon: const Icon(Icons.grid_on),
-              onPressed: () {
-                setState(() {
-                  isGrid = true;
-                });
-              },
-            )
-        ],
-        title: const Text(
-          'Home',
+            ),
+          ],
+          title: const Text(
+            'Home',
+          ),
+          // automaticallyImplyLeading: false,
         ),
-        // automaticallyImplyLeading: false,
+        body: _buildBody(context),
       ),
-      body: _buildBody(context),
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    return isGrid ? const GridBuild() : const ListBuild();
+    return Consumer<HomePageProvider>(
+      builder: (context, value, child) {
+        return value.isGrid
+            ? GridBuild(value.products)
+            : ListBuild(value.products);
+      },
+    );
   }
 }

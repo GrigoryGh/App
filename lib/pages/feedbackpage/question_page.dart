@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../base/routes.dart';
 import '../../models/feedback_model.dart';
@@ -16,10 +14,10 @@ class QuestionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Container(
-          padding: EdgeInsets.all(50),
+          padding: const EdgeInsets.all(20),
           child: Text(
             questionsList[index].questionText!,
-            style: TextStyle(fontSize: 30),
+            style: const TextStyle(fontSize: 30),
           )),
       SizedBox(
         height: 400,
