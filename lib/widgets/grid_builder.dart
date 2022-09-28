@@ -25,8 +25,8 @@ class GridBuild extends StatelessWidget {
             child: Container(
               width: 180,
               height: 180,
-              decoration: BoxDecoration(boxShadow: [
-                const BoxShadow(
+              decoration: BoxDecoration(boxShadow: const [
+                BoxShadow(
                     color: Colors.grey,
                     spreadRadius: 1,
                     blurRadius: 2,

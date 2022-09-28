@@ -37,13 +37,23 @@ Widget _buildBody(BuildContext context) {
           physics: const NeverScrollableScrollPhysics(),
           controller: controller,
           itemBuilder: (context, index) {
-            return Column(children: [
-              LinearProgressIndicator(
-                value:
-                    (value.currentQuestionIndex + 1) / (value.questions.length),
-              ),
-              QuestionPage(questionsList: value.questions, index: index),
-            ]);
+            return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AnimatedContainer(
+                    color: Colors.indigo,
+                    height: 5,
+                    duration: const Duration(milliseconds: 500),
+                    width: MediaQuery.of(context).size.width *
+                        (value.currentQuestionIndex + 1) /
+                        (value.questions.length),
+                  ),
+                  // LinearProgressIndicator(
+                  //   value:
+                  //       (value.currentQuestionIndex + 1) / (value.questions.length),
+                  // ),
+                  QuestionPage(questionsList: value.questions, index: index),
+                ]);
           },
           onPageChanged: (val) {
             value.onChange(val);
